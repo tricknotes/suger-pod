@@ -1,7 +1,6 @@
 # Suger Pod
 Suger Pod is a simple template engin that extends CoffeeScript.
 
----
 ## Installation
 
 ```
@@ -9,7 +8,6 @@ $ npm install suger-pod
 node> require('suger-pod');
 ```
 
----
 ## Quick Example
 
 ```coffee-script
@@ -23,13 +21,11 @@ Bind agrs to variables that start with '@@'.
 
 Types of Embeded variable are supprted with String, Number, Boolean and Object.
 
----
 ## Express
 To use with [Express](http://expressjs.com/) and the .coffee extension, simply register the engine:
 ```coffee-script
 app.register('.coffee', require('suger-pod'))
 ```
 
----
 ## License
 Licensed under MIT.
