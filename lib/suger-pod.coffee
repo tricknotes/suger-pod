@@ -4,10 +4,10 @@ exports.compile = (source, _) ->
   (locals) ->
     str = source.replace /@@([a-zA-Z]+)/, (_, name) ->
       switch typeof value = locals[name]
+        when 'function'
+          throw "Function should not be embeded: @@#{name}"
         when 'string'
           "'#{value.replace(/\n/g, '\\n').replace("'", "\\'")}'"
-        when 'function'
-          "`#{value.toString()}`"
         when 'object'
           "`#{JSON.stringify(value)}`"
         else

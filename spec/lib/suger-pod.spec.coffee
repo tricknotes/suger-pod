@@ -46,6 +46,10 @@ describe 'suger-pod', ->
           expect(@suger.render('config = @@config', config: {path: "/config", name: 'Jhon', age: 35}))
             .toEqual(helper.enclose('  var config;\n  config = {"path":"/config","name":\"Jhon\","age":35};'))
 
+        it 'should not be rendered with Function', ->
+          expect(=> @suger.render('@@sum', sum: (a, b) -> a + b))
+            .toThrow('Function should not be embeded: @@sum')
+
   describe '.compile()', ->
     it 'should be compiled', ->
       expect(@suger.compile('location.href = @@url')(url: 'http://example.com/'))
