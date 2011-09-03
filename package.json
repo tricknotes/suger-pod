@@ -2,10 +2,20 @@
   "name": "suger-pod",
   "description": "Template engin using CoffeeScript",
   "version": "0.0.1",
-  "author": "Ryunosuke SATO <tricknotes.rs@gmail.com>",
+  "author": "Ryunosuke SATO <tricknotes.rs@gmail.com> (http://d.hatena.ne.jp/tricknotes/)",
   "dependencies": {
     "coffee-script": ">= 1.1.2 < 2.0.0"
   },
   "main": "index",
-  "engines": { "node": ">= 0.4.1 < 0.5.0" }
+  "engines": {
+    "node": ">= 0.4.1 < 0.5.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tricknotes/suger-pod.git"
+  },
+  "scripts": {
+    "test": "cake spec"
+  }
 }
