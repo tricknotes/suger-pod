@@ -7,7 +7,7 @@ exports.compile = (source, _) ->
         when 'function'
           throw "Function should not be embeded: @@#{name}"
         when 'string'
-          "'#{value.replace(/\n/g, '\\n').replace("'", "\\'")}'"
+          "'#{value.replace(/\n/g, '\\n').replace(/'/g, "\\'")}'"
         when 'object'
           "`#{JSON.stringify(value)}`"
         else
