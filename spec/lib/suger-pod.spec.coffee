@@ -46,6 +46,15 @@ describe 'suger-pod', ->
           expect(@suger.render('config = @@config', config: {path: "/config", name: 'Jhon', age: 35}))
             .toEqual(helper.enclose('  var config;\n  config = {"path":"/config","name":\"Jhon\","age":35};'))
 
+        it 'should be rendered with Date', ->
+          date = new Date(2011, 8, 4, 11, 15, 30) # want to consider timezone
+          expect(@suger.render('@@now', now: date))
+            .toEqual(helper.enclose("  new Date('#{date.toString()}');"))
+
+        it 'should be rendered with RegExp', ->
+          expect(@suger.render('@@escape', escape: /(?:\n')+[a-z]/))
+            .toEqual(helper.enclose('  /(?:\\n\')+[a-z]/;'))
+
         it 'should not be rendered with Function', ->
           expect(=> @suger.render('@@sum', sum: (a, b) -> a + b))
             .toThrow('Function should not be embeded: @@sum')

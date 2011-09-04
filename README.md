@@ -19,7 +19,7 @@ suger.render "console.log @@name", name: 'Jhon'
 Bind agrs to variables that start with '@@'.
 (for example: @@name)
 
-Types of Embeded variable are supprted with String, Number, Boolean and Object.
+Types of Embeded variable are supprted with String, Number, Boolean, Date, RegExp and Object.
 
 ## Express
 To use with [Express](http://expressjs.com/) and the .coffee extension, simply register the engine:
