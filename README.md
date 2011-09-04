@@ -23,6 +23,7 @@ Types of Embeded variable are supprted with String, Number, Boolean and Object.
 
 ## Express
 To use with [Express](http://expressjs.com/) and the .coffee extension, simply register the engine:
+
 ```coffee-script
 app.register('.coffee', require('suger-pod'))
 ```
