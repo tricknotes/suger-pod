@@ -1,4 +1,4 @@
-require.paths.unshift './spec', './spec/lib', './lib'
+require.paths.unshift './spec', './lib'
 
 exports.enclose = (source) ->
   """
