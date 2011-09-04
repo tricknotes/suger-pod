@@ -2,7 +2,7 @@ coffee = require 'coffee-script'
 
 exports.compile = (source, _) ->
   (locals) ->
-    str = source.replace /@@([a-zA-Z]+)/, (_, name) ->
+    str = source.replace /@@([a-zA-Z]+)/g, (_, name) ->
       switch typeof value = locals[name]
         when 'function'
           throw "Function should not be embeded: @@#{name}"

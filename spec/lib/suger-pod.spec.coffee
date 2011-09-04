@@ -50,6 +50,11 @@ describe 'suger-pod', ->
           expect(=> @suger.render('@@sum', sum: (a, b) -> a + b))
             .toThrow('Function should not be embeded: @@sum')
 
+    describe 'when variables are setted twice', ->
+      it 'should set each variables', ->
+        expect(@suger.render('"#{@@firstName} #{@@lastName}"', firstName: 'Nia',lastName: 'Teppelin'))
+          .toEqual(helper.enclose('  "" + \'Nia\' + " " + \'Teppelin\';'))
+
   describe '.compile()', ->
     it 'should be compiled', ->
       expect(@suger.compile('location.href = @@url')(url: 'http://example.com/'))
