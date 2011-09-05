@@ -1,4 +1,5 @@
 helper = require __dirname + '/../spec_helper'
+coffee = require 'coffee-script'
 
 describe 'suger-pod', ->
   beforeEach ->
@@ -10,59 +11,64 @@ describe 'suger-pod', ->
         expect(@suger.render('console.log Number "234"'))
           .toEqual(helper.enclose('  console.log(Number("234"));'))
 
+  describe '.compileToCoffee()', ->
+    beforeEach ->
+      @eval  = (source, locals) ->
+        coffee.eval(@suger.compileToCoffee(source, locals))
+
     describe 'when call with empty string', ->
       it 'should be rendered empty', ->
-        expect(@suger.render(''))
-          .toEqual(helper.enclose(''))
+        expect(@eval('')).toEqual(undefined)
 
     describe 'with options', ->
       describe 'as primitive', ->
         it 'should be rendered with String', ->
-          expect(@suger.render('alert @@message', message: "I can't go."))
-            .toEqual(helper.enclose("  alert('I can\\'t go.');"))
+          expect(@eval('@@message', message: "I can't go."))
+            .toEqual("I can't go.")
 
         it 'should be rendered with Number', ->
-          expect(@suger.render('"#{@@year} years ago."', year: 26))
-            .toEqual(helper.enclose('  "" + 26 + " years ago.";'))
+          expect(@eval('"#{@@year} years ago."', year: 26))
+            .toEqual('26 years ago.')
 
         it 'should be rendered with Boolean', ->
-          expect(@suger.render('{married: @@married}', married: false))
-            .toEqual(helper.enclose("  ({\n    married: false\n  });"))
+          expect(@eval('{married: @@married}', married: false))
+            .toEqual(married: false)
 
       describe 'as object', ->
         it 'should be rendered with String', ->
-          expect(@suger.render('alert @@data', data: new String("I can't go.")))
-            .toEqual(helper.enclose("  alert(\"I can't go.\");"))
+          expect(@eval('@@data', data: new String("I can't go.")))
+            .toEqual("I can't go.")
 
         it 'should be rendered with Number', ->
-          expect(@suger.render('"#{@@year} years ago."', year: new Number(26)))
-            .toEqual(helper.enclose('  "" + 26 + " years ago.";'))
+          expect(@eval('"#{@@year} years ago."', year: new Number(26)))
+            .toEqual("26 years ago.")
 
         it 'should be rendered with Boolean', ->
-          expect(@suger.render('{married: @@married}', married: new Boolean(false)))
-            .toEqual(helper.enclose("  ({\n    married: false\n  });"))
+          expect(@eval('{married: @@married}', married: new Boolean(false)))
+            .toEqual(married: false)
 
         it 'should be rendered with Object', ->
-          expect(@suger.render('config = @@config', config: {path: "/config", name: 'Jhon', age: 35}))
-            .toEqual(helper.enclose('  var config;\n  config = {"path":"/config","name":\"Jhon\","age":35};'))
+          expect(@eval('config: @@config', config: {path: "/config", name: 'Jhon', age: 35}))
+            .toEqual(config: {path: "/config", name: 'Jhon', age: 35})
 
         it 'should be rendered with Date', ->
-          date = new Date(2011, 8, 4, 11, 15, 30) # want to consider timezone
-          expect(@suger.render('@@now', now: date))
-            .toEqual(helper.enclose("  new Date('#{date.toString()}');"))
+          date = new Date(2011, 8, 4, 11, 15, 30)
+          expect(@eval('@@now', now: date))
+            .toEqual(date)
 
         it 'should be rendered with RegExp', ->
-          expect(@suger.render('@@escape', escape: /(?:\n')+[a-z]/))
-            .toEqual(helper.enclose('  /(?:\\n\')+[a-z]/;'))
+          # node 0.4.x interpret RegExp as Function
+          expect(@eval('@@escape', escape: /(?:\n')+[a-z]/gi).toString())
+            .toEqual(/(?:\n')+[a-z]/gi.toString())
 
         it 'should not be rendered with Function', ->
-          expect(=> @suger.render('@@sum', sum: (a, b) -> a + b))
+          expect(=> @eval('@@sum', sum: (a, b) -> a + b))
             .toThrow('Function should not be embeded: @@sum')
 
     describe 'when variables are setted twice', ->
       it 'should set each variables', ->
-        expect(@suger.render('"#{@@firstName} #{@@lastName}"', firstName: 'Nia',lastName: 'Teppelin'))
-          .toEqual(helper.enclose('  "" + \'Nia\' + " " + \'Teppelin\';'))
+        expect(@eval('"#{@@firstName} #{@@lastName}"', firstName: 'Nia',lastName: 'Teppelin'))
+          .toEqual('Nia Teppelin')
 
   describe '.compile()', ->
     it 'should be compiled', ->
