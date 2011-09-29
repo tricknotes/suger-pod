@@ -11,10 +11,10 @@ describe 'suger-pod', ->
         expect(@suger.render('console.log Number "234"'))
           .toEqual(helper.enclose('  console.log(Number("234"));'))
 
-  describe '.compileToCoffee()', ->
+  describe '.preCompile()', ->
     beforeEach ->
       @eval  = (source, locals) ->
-        coffee.eval(@suger.compileToCoffee(source, locals))
+        coffee.eval(@suger.preCompile(source, locals))
 
     describe 'when call with empty string', ->
       it 'should be rendered empty', ->

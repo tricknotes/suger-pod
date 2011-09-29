@@ -1,6 +1,6 @@
 coffee = require 'coffee-script'
 
-exports.compileToCoffee = (source, locals) ->
+exports.preCompile = (source, locals) ->
   source.replace /@@([a-zA-Z]+)/g, (_, name) ->
     switch typeof value = locals[name]
       when 'function'
@@ -23,7 +23,7 @@ exports.compileToCoffee = (source, locals) ->
 
 exports.compile = (source, _) ->
   (locals) ->
-    coffee.compile(exports.compileToCoffee(source, locals))
+    coffee.compile(exports.preCompile(source, locals))
 
 exports.render = (source, options) ->
   exports.compile(source)(options)
