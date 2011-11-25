@@ -3,13 +3,13 @@ coffee = require 'coffee-script'
 
 describe 'suger-pod', ->
   beforeEach ->
-    @suger = require 'suger-pod'
+    @suger = require __dirname + '/../../'
 
   describe '.render()', ->
     describe 'when call with coffee-script', ->
       it 'should be rendered', ->
         expect(@suger.render('console.log Number "234"'))
-          .toEqual(helper.enclose('  console.log(Number("234"));'))
+          .toEqual('\n  console.log(Number("234"));\n')
 
   describe '.preCompile()', ->
     beforeEach ->
@@ -73,4 +73,4 @@ describe 'suger-pod', ->
   describe '.compile()', ->
     it 'should be compiled', ->
       expect(@suger.compile('location.href = @@url')(url: 'http://example.com/'))
-        .toEqual(helper.enclose("  location.href = 'http://example.com/';"))
+        .toEqual("\n  location.href = 'http://example.com/';\n")

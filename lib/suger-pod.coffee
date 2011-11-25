@@ -4,7 +4,7 @@ exports.preCompile = (source, locals) ->
   source.replace /@@([a-zA-Z]+)/g, (_, name) ->
     switch typeof value = locals[name]
       when 'function'
-        if value.constructor == RegExp # node 0.4.x
+        if value.constructor == RegExp # NODE_VERSION < 0.5.0
           value.toString().replace(/\n/g, '\\n')
         else
           throw "Function should not be embeded: @@#{name}"
@@ -14,8 +14,8 @@ exports.preCompile = (source, locals) ->
         switch value.constructor
           when Date
             "new Date('#{value}')"
-          when RegExp # node 0.5.x
-            escape(value.toString())
+          when RegExp # NODE_VERSION >= 0.5.0
+            value.toString()
           else
             "`#{JSON.stringify(value)}`"
       else
