@@ -1,7 +1,7 @@
 {
   "name": "suger-pod",
   "description": "Template engin using CoffeeScript",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Ryunosuke SATO <tricknotes.rs@gmail.com> (http://d.hatena.ne.jp/tricknotes/)",
   "directories": {
     "lib": "./lib",
@@ -15,7 +15,7 @@
   },
   "main": "index",
   "engines": {
-    "node": ">= 3.4.1 < 0.7.0"
+    "node": ">= 0.4.1 < 0.7.0"
   },
   "repository": {
     "type": "git",
