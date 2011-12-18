@@ -1,4 +1,3 @@
-helper = require __dirname + '/../spec_helper'
 coffee = require 'coffee-script'
 
 describe 'suger-pod', ->
